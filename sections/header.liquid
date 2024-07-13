@@ -1,4 +1,8 @@
-<header class="header header1">
+
+
+{% case section.settins.header_type %}
+  {% when 'header1' %}
+    <header class="header header1">
   <ul class="header1__collections-nav">
     <li class="header1__collection-link"><a href="/link">Link top <i class="fas fa-chevron-down"></i></a>
       <ul class="collection-link__sub-links">
@@ -11,7 +15,28 @@
     <li class="header1__collection-link"><a href="/link">Link</a></li>
     <li class="header1__collection-link"><a href="/link">Link</a></li>
   </ul>
-  <div class="header1__logo"><a href="/link">Company</a></div>
+  <div class="header1__logo"><a href="{{ routes.root_url }}">
+    {%- if settings.logo != blank -%}
+      <div class="header__heading-logo-wrapper">
+        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+        {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+        {{ settings.logo | image_url: width: 600 | image_tag:
+          class: 'header__heading-logo motion-reduce',
+          widths: widths,
+          height: logo_height,
+          width: settings.logo_width,
+          alt: logo_alt,
+          sizes: sizes,
+          preload: true
+        }}
+      </div>
+    {%- else -%}
+      {{ shop.name }}
+    {%- endif -%}
+  </a>
+  </div>
   <ul class="header1__collections-nav">
     <li class="header1__collection-link"><a href="/link">Link top <i class="fas fa-chevron-down"></i></a>
       <ul class="collection-link__sub-links">
@@ -26,9 +51,6 @@
         class="fas fa-shopping-cart"></i></a><a href="/cart"><i class="fas fa-user"></i></a>
   </ul>
 </header>
-
-{% case section.settins.header_type %}
-  {% when "header1" %}
   
   {% when "header2" %}
 
