@@ -1,286 +1,427 @@
-
-
-{% case section.settins.header_type %}
-  {% when 'header1' %}
-    <header class="header header1">
+{% case section.settings.header_type %}
+{% when 'header1' %}
+<header class="header header1">
   <ul class="header1__collections-nav">
-    <li class="header1__collection-link"><a href="/link">Link top <i class="fas fa-chevron-down"></i></a>
+    {%- if section.settings.menu != blank-%}
+    {%- for link in linklists[section.settings.menu].links -%}
+    {%- if link.links == blank-%}
+    <li class="header1__collection-link"><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+    {%- else -%}
+    <li class="header1__collection-link">
+      <a href="{{ link.url }}">{{ link.title | escape }} <i class="fas fa-chevron-down"></i></a>
       <ul class="collection-link__sub-links">
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
+        {%- for childlink in link.links -%}
+        <li><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+        {%- endfor -%}
       </ul>
     </li>
-    <li class="header1__collection-link"><a href="/link">Link</a></li>
-    <li class="header1__collection-link"><a href="/link">Link</a></li>
+    {%- endif -%}
+    {%- endfor -%}
+    {%- endif -%}
   </ul>
-  <div class="header1__logo"><a href="{{ routes.root_url }}">
-    {%- if settings.logo != blank -%}
-      <div class="header__heading-logo-wrapper">
+  <div class="header1__logo">
+    <a href="{{ routes.root_url }}">
+      {%- if settings.logo != blank -%}
+      <div class="header1__heading-logo-wrapper">
         {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
         {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{%
+        endcapture %}
+        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{
+        settings.logo_width | times: 2 }}{% endcapture %}
         {{ settings.logo | image_url: width: 600 | image_tag:
-          class: 'header__heading-logo motion-reduce',
-          widths: widths,
-          height: logo_height,
-          width: settings.logo_width,
-          alt: logo_alt,
-          sizes: sizes,
-          preload: true
+        class: 'header1__heading-logo motion-reduce',
+        widths: widths,
+        height: logo_height,
+        width: settings.logo_width,
+        alt: logo_alt,
+        sizes: sizes,
+        preload: true
         }}
       </div>
-    {%- else -%}
+      {%- else -%}
       {{ shop.name }}
-    {%- endif -%}
-  </a>
+      {%- endif -%}
+    </a>
   </div>
   <ul class="header1__collections-nav">
-    <li class="header1__collection-link"><a href="/link">Link top <i class="fas fa-chevron-down"></i></a>
+    {%- if section.settings.menu_two != blank-%}
+    {%- for link in linklists[section.settings.menu_two].links -%}
+    {%- if link.links == blank-%}
+    <li class="header1__collection-link"><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+    {%- else -%}
+    <li class="header1__collection-link">
+      <a href="{{ link.url }}">{{ link.title | escape }} <i class="fas fa-chevron-down"></i></a>
       <ul class="collection-link__sub-links">
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
+        {%- for childlink in link.links -%}
+        <li><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+        {%- endfor -%}
       </ul>
     </li>
-    <li class="header1__collection-link"><a href="/link">Link</a></li>
-    <li class="header1__collection-link"><a href="/link">Link</a></li><a href="/cart"><i
-        class="fas fa-shopping-cart"></i></a><a href="/cart"><i class="fas fa-user"></i></a>
+    {%- endif -%}
+    {%- endfor -%}
+    {%- endif -%}
+    <a href="{{ routes.cart_url }}">
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+    {%- if shop.customer_accounts_enabled -%}
+    <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}">
+      <i class="fas fa-user"></i>
+    </a>
+    {%- endif -%}
   </ul>
 </header>
-  
-  {% when "header2" %}
 
-  {% when "header3" %}
+{% when 'header2' %}
+<!-- Header 2 code here -->
+<header class="header header2">
+  <div class="header2__logo">
+    <a href="{{ routes.root_url }}">
+      {%- if settings.logo != blank -%}
+      <div class="header2__heading-logo-wrapper">
+        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+        {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{%
+        endcapture %}
+        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{
+        settings.logo_width | times: 2 }}{% endcapture %}
+        {{ settings.logo | image_url: width: 600 | image_tag:
+        class: 'header1__heading-logo motion-reduce',
+        widths: widths,
+        height: logo_height,
+        width: settings.logo_width,
+        alt: logo_alt,
+        sizes: sizes,
+        preload: true
+        }}
+      </div>
+      {%- else -%}
+      {{ shop.name }}
+      {%- endif -%}
+    </a>
+  </div>
+  <ul class="header2__collections-nav">
+    {%- if section.settings.menu != blank-%}
+    {%- for link in linklists[section.settings.menu].links -%}
+    {%- if link.links == blank-%}
+    <li class="header2__collection-link"><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+    {%- else -%}
+    <li class="header2__collection-link">
+      <a href="{{ link.url }}">{{ link.title | escape }} <i class="fas fa-chevron-down"></i></a>
+      <ul class="collection-link__sub-links">
+        {%- for childlink in link.links -%}
+        <li><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+    {%- endif -%}
+  </ul>
+  <div class="header2__collections-nav">
+    <a href="{{ routes.cart_url }}">
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+    {%- if shop.customer_accounts_enabled -%}
+    <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}">
+      <i class="fas fa-user"></i>
+    </a>
+    {%- endif -%}
+  </div>
+</header>
+
+{% when 'header3' %}
+<!-- Header 3 code here -->
+<header class="header header3">
+  <div class="header3__logo">
+    <a href="{{ routes.root_url }}">
+      {%- if settings.logo != blank -%}
+      <div class="header3__heading-logo-wrapper">
+        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+        {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{%
+        endcapture %}
+        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{
+        settings.logo_width | times: 2 }}{% endcapture %}
+        {{ settings.logo | image_url: width: 600 | image_tag:
+        class: 'header3__heading-logo motion-reduce',
+        widths: widths,
+        height: logo_height,
+        width: settings.logo_width,
+        alt: logo_alt,
+        sizes: sizes,
+        preload: true
+        }}
+      </div>
+      {%- else -%}
+      {{ shop.name }}
+      {%- endif -%}
+    </a>
+  </div>
+  <ul class="header3__collections-nav">
+    {%- if section.settings.menu != blank-%}
+    {%- for link in linklists[section.settings.menu].links -%}
+    {%- if link.links == blank-%}
+    <li class="header3__collection-link"><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+    {%- else -%}
+    <li class="header3__collection-link">
+      <a href="{{ link.url }}">{{ link.title | escape }} <i class="fas fa-chevron-down"></i></a>
+      <ul class="collection-link__sub-links">
+        {%- for childlink in link.links -%}
+        <li><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+    {%- endif -%}
+    <li>
+      <a href="{{ routes.cart_url }}">
+        <i class="fas fa-shopping-cart"></i>
+      </a>
+    </li>
+    <li>
+      {%- if shop.customer_accounts_enabled -%}
+      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}">
+        <i class="fas fa-user"></i>
+      </a>
+      {%- endif -%}
+    </li>
+
+  </ul>
+</header>
+
 {% endcase %}
 
 
 
 {% schema %}
-  {
-    "name": "t:sections.header.name",
-    "class": "section-header",
-    "max_blocks": 3,
-    "settings": [
-      {
-        "type": "select",
-        "id": "header_type",
-        "label": "Type Of Header",
-        "options": [
-          {
-            "value": "header1",
-            "label": "header 1"
-          },
-          {
-            "value": "header2",
-            "label": "header 2"
-          },
-          {
-            "value": "header3",
-            "label": "header 3"
-          }
-        ],
-        "default": "header1"
-      },
-      {
-        "type": "select",
-        "id": "logo_position",
-        "options": [
-          {
-            "value": "top-left",
-            "label": "t:sections.header.settings.logo_position.options__2.label"
-          },
-          {
-            "value": "top-center",
-            "label": "t:sections.header.settings.logo_position.options__3.label"
-          },
-          {
-            "value": "middle-left",
-            "label": "t:sections.header.settings.logo_position.options__1.label"
-          },
-          {
-            "value": "middle-center",
-            "label": "t:sections.header.settings.logo_position.options__4.label"
-          }
-        ],
-        "default": "middle-left",
-        "label": "t:sections.header.settings.logo_position.label",
-        "info": "t:sections.header.settings.logo_help.content"
-      },
-      {
-        "type": "link_list",
-        "id": "menu",
-        "default": "main-menu",
-        "label": "t:sections.header.settings.menu.label"
-      },
-      {
-        "type": "select",
-        "id": "menu_type_desktop",
-        "options": [
-          {
-            "value": "dropdown",
-            "label": "t:sections.header.settings.menu_type_desktop.options__1.label"
-          },
-          {
-            "value": "mega",
-            "label": "t:sections.header.settings.menu_type_desktop.options__2.label"
-          },
-          {
-            "value": "drawer",
-            "label": "t:sections.header.settings.menu_type_desktop.options__3.label"
-          }
-        ],
-        "default": "dropdown",
-        "label": "t:sections.header.settings.menu_type_desktop.label",
-        "info": "t:sections.header.settings.menu_type_desktop.info"
-      },
-      {
-        "type": "select",
-        "id": "sticky_header_type",
-        "options": [
-          {
-            "value": "none",
-            "label": "t:sections.header.settings.sticky_header_type.options__1.label"
-          },
-          {
-            "value": "on-scroll-up",
-            "label": "t:sections.header.settings.sticky_header_type.options__2.label"
-          },
-          {
-            "value": "always",
-            "label": "t:sections.header.settings.sticky_header_type.options__3.label"
-          },
-          {
-            "value": "reduce-logo-size",
-            "label": "t:sections.header.settings.sticky_header_type.options__4.label"
-          }
-        ],
-        "default": "on-scroll-up",
-        "label": "t:sections.header.settings.sticky_header_type.label"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_line_separator",
-        "default": true,
-        "label": "t:sections.header.settings.show_line_separator.label"
-      },
-      {
-        "type": "header",
-        "content": "t:sections.header.settings.header__1.content"
-      },
-      {
-        "type": "color_scheme",
-        "id": "color_scheme",
-        "label": "t:sections.all.colors.label",
-        "default": "scheme-1"
-      },
-      {
-        "type": "color_scheme",
-        "id": "menu_color_scheme",
-        "label": "t:sections.header.settings.menu_color_scheme.label",
-        "default": "scheme-1"
-      },
-      {
-        "type": "header",
-        "content": "t:sections.header.settings.header__3.content",
-        "info": "t:sections.header.settings.header__4.info"
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_country_selector",
-        "default": true,
-        "label": "t:sections.header.settings.enable_country_selector.label"
-      },
-      {
-        "type": "header",
-        "content": "t:sections.header.settings.header__5.content",
-        "info": "t:sections.header.settings.header__6.info"
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_language_selector",
-        "default": true,
-        "label": "t:sections.header.settings.enable_language_selector.label"
-      },
-      {
-        "type": "header",
-        "content": "t:sections.header.settings.header__7.content",
-        "info": "t:sections.header.settings.header__7.info"
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_customer_avatar",
-        "default": true,
-        "label": "t:sections.header.settings.enable_customer_avatar.label",
-        "info": "t:sections.header.settings.enable_customer_avatar.info"
-      },
-      {
-        "type": "header",
-        "content": "t:sections.header.settings.mobile_layout.content"
-      },
-      {
-        "type": "select",
-        "id": "mobile_logo_position",
-        "options": [
-          {
-            "value": "center",
-            "label": "t:sections.header.settings.mobile_logo_position.options__1.label"
-          },
-          {
-            "value": "left",
-            "label": "t:sections.header.settings.mobile_logo_position.options__2.label"
-          }
-        ],
-        "default": "center",
-        "label": "t:sections.header.settings.mobile_logo_position.label"
-      },
-      {
-        "type": "header",
-        "content": "t:sections.all.spacing"
-      },
-      {
-        "type": "range",
-        "id": "margin_bottom",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "t:sections.header.settings.margin_bottom.label",
-        "default": 0
-      },
-      {
-        "type": "header",
-        "content": "t:sections.all.padding.section_padding_heading"
-      },
-      {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 36,
-        "step": 4,
-        "unit": "px",
-        "label": "t:sections.all.padding.padding_top",
-        "default": 20
-      },
-      {
-        "type": "range",
-        "id": "padding_bottom",
-        "min": 0,
-        "max": 36,
-        "step": 4,
-        "unit": "px",
-        "label": "t:sections.all.padding.padding_bottom",
-        "default": 20
-      }
-    ],
-    "blocks": [
-      {
-        "type": "@app"
-      }
-    ]
-  }
-  {% endschema %}
-  
+{
+"name": "t:sections.header.name",
+"class": "section-header",
+"max_blocks": 3,
+"settings": [
+{
+"type": "select",
+"id": "header_type",
+"label": "Type Of Header",
+"options": [
+{
+"value": "header1",
+"label": "header 1"
+},
+{
+"value": "header2",
+"label": "header 2"
+},
+{
+"value": "header3",
+"label": "header 3"
+}
+],
+"default": "header1"
+},
+{
+"type": "select",
+"id": "logo_position",
+"options": [
+{
+"value": "top-left",
+"label": "t:sections.header.settings.logo_position.options__2.label"
+},
+{
+"value": "top-center",
+"label": "t:sections.header.settings.logo_position.options__3.label"
+},
+{
+"value": "middle-left",
+"label": "t:sections.header.settings.logo_position.options__1.label"
+},
+{
+"value": "middle-center",
+"label": "t:sections.header.settings.logo_position.options__4.label"
+}
+],
+"default": "middle-left",
+"label": "t:sections.header.settings.logo_position.label",
+"info": "t:sections.header.settings.logo_help.content"
+},
+{
+"type": "link_list",
+"id": "menu",
+"default": "main-menu",
+"label": "t:sections.header.settings.menu.label"
+},
+{
+"type": "text",
+"id": "menu_two",
+"default": "menu_two",
+"label": "Alternate Menu"
+},
+{
+"type": "select",
+"id": "menu_type_desktop",
+"options": [
+{
+"value": "dropdown",
+"label": "t:sections.header.settings.menu_type_desktop.options__1.label"
+},
+{
+"value": "mega",
+"label": "t:sections.header.settings.menu_type_desktop.options__2.label"
+},
+{
+"value": "drawer",
+"label": "t:sections.header.settings.menu_type_desktop.options__3.label"
+}
+],
+"default": "dropdown",
+"label": "t:sections.header.settings.menu_type_desktop.label",
+"info": "t:sections.header.settings.menu_type_desktop.info"
+},
+{
+"type": "select",
+"id": "sticky_header_type",
+"options": [
+{
+"value": "none",
+"label": "t:sections.header.settings.sticky_header_type.options__1.label"
+},
+{
+"value": "on-scroll-up",
+"label": "t:sections.header.settings.sticky_header_type.options__2.label"
+},
+{
+"value": "always",
+"label": "t:sections.header.settings.sticky_header_type.options__3.label"
+},
+{
+"value": "reduce-logo-size",
+"label": "t:sections.header.settings.sticky_header_type.options__4.label"
+}
+],
+"default": "on-scroll-up",
+"label": "t:sections.header.settings.sticky_header_type.label"
+},
+{
+"type": "checkbox",
+"id": "show_line_separator",
+"default": true,
+"label": "t:sections.header.settings.show_line_separator.label"
+},
+{
+"type": "header",
+"content": "t:sections.header.settings.header__1.content"
+},
+{
+"type": "color_scheme",
+"id": "color_scheme",
+"label": "t:sections.all.colors.label",
+"default": "scheme-1"
+},
+{
+"type": "color_scheme",
+"id": "menu_color_scheme",
+"label": "t:sections.header.settings.menu_color_scheme.label",
+"default": "scheme-1"
+},
+{
+"type": "header",
+"content": "t:sections.header.settings.header__3.content",
+"info": "t:sections.header.settings.header__4.info"
+},
+{
+"type": "checkbox",
+"id": "enable_country_selector",
+"default": true,
+"label": "t:sections.header.settings.enable_country_selector.label"
+},
+{
+"type": "header",
+"content": "t:sections.header.settings.header__5.content",
+"info": "t:sections.header.settings.header__6.info"
+},
+{
+"type": "checkbox",
+"id": "enable_language_selector",
+"default": true,
+"label": "t:sections.header.settings.enable_language_selector.label"
+},
+{
+"type": "header",
+"content": "t:sections.header.settings.header__7.content",
+"info": "t:sections.header.settings.header__7.info"
+},
+{
+"type": "checkbox",
+"id": "enable_customer_avatar",
+"default": true,
+"label": "t:sections.header.settings.enable_customer_avatar.label",
+"info": "t:sections.header.settings.enable_customer_avatar.info"
+},
+{
+"type": "header",
+"content": "t:sections.header.settings.mobile_layout.content"
+},
+{
+"type": "select",
+"id": "mobile_logo_position",
+"options": [
+{
+"value": "center",
+"label": "t:sections.header.settings.mobile_logo_position.options__1.label"
+},
+{
+"value": "left",
+"label": "t:sections.header.settings.mobile_logo_position.options__2.label"
+}
+],
+"default": "center",
+"label": "t:sections.header.settings.mobile_logo_position.label"
+},
+{
+"type": "header",
+"content": "t:sections.all.spacing"
+},
+{
+"type": "range",
+"id": "margin_bottom",
+"min": 0,
+"max": 100,
+"step": 4,
+"unit": "px",
+"label": "t:sections.header.settings.margin_bottom.label",
+"default": 0
+},
+{
+"type": "header",
+"content": "t:sections.all.padding.section_padding_heading"
+},
+{
+"type": "range",
+"id": "padding_top",
+"min": 0,
+"max": 36,
+"step": 4,
+"unit": "px",
+"label": "t:sections.all.padding.padding_top",
+"default": 20
+},
+{
+"type": "range",
+"id": "padding_bottom",
+"min": 0,
+"max": 36,
+"step": 4,
+"unit": "px",
+"label": "t:sections.all.padding.padding_bottom",
+"default": 20
+}
+],
+"blocks": [
+{
+"type": "@app"
+}
+]
+}
+{% endschema %}
