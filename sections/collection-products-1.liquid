@@ -5,7 +5,8 @@
       <div class="{{ section.settings.xxl_col }} {{ section.settings.xl_col }} {{ section.settings.l_col }} {{ section.settings.md_col }} {{ section.settings.sm_col }}">
         <div class="collection1__collection-item">
           {%  assign opacity = section.settings.opacity | divided_by: 100.00  %} 
-          <div class="collection1__product-img collection1__product-img--{{ section.settings.image_fit }}" style=" background-color: {{ section.settings.Cbackground |  color_modify: 'alpha', opacity }}">
+          <div class="collection1__product-img collection1__product-img--{{ section.settings.image_fit }}
+           collection1__product-img--{{ section.settings.container_shape }}" style=" background-color: {{ section.settings.Cbackground |  color_modify: 'alpha', opacity }}">
             <div class="collection1__heart"><i class="far fa-heart"></i></div>
             {%- if  product.images[0] != blank -%}
               <a href="{{ product.url }}" class="img-link">
@@ -58,54 +59,7 @@
   </div>
 </div>
 
-<div class="hero hero1 hero1--aligned-{{ section.settings.info_alignment }} hero1--{{ section.settings.hero_height }}">
-        {%- if section.settings.image != blank -%}
-        <img class="hero1__bg" src="{%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
-                      {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
-                      {%- capture sizes -%}
-                    (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 1.6667 }}px,
-                    (min-width: 750px) calc((100vw - 130px) / 1.667), calc((100vw - 50px) / 1.667)
-                  {%- endcapture -%}
-                    {%- else -%}
-                      {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
-                      {%- capture sizes -%}
-                    (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
-                    (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
-                  {%- endcapture -%}
-                    {%- endif -%}
-                    {{
-                      section.settings.image
-                      | image_url: width: 2000
-                      | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority
-                    }}">
-        
-        {%- else -%}
-        {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
-        {%- endif -%}
-          {%  assign opacity = section.settings.opacity | divided_by: 100.00  %} 
-    <div class="hero1__content-container" style=" background-color: {{ section.settings.background |  color_modify: 'alpha', opacity }}">
-        <div class="hero1__info">
-            {%- for block in section.blocks -%}
-            {% case block.type %}
-            {%- when 'heading' -%}
-            <h1 class="hero1__title hero1__title--{{- block.settings.title_size -}}">{{ block.settings.title |  escape }}</h1>
-            
-            {%- when 'paragraph' -%}
-                <p class="hero1__paragraph">
-                    {{ block.settings.paragraph }}
-                </p>
-            {%- when 'button' -%}
 
-            {%- if block.settings.button_label != blank -%}
-                <a href="{{ block.settings.button_link }}" class="hero1__button" {{ block.shopify_attributes }}>{{ block.settings.button_label | escape }}</a>
-                
-            </a>
-            {%- endif -%}
-            {%- endcase -%}
-            {%- endfor -%}
-        </div>
-    </div>
-</div>
 
 
 
@@ -138,28 +92,34 @@
       "label": "Collection"
     },
     {
+        "type": "range",
+        "id": "total_products",
+        "min": 1,
+        "max": 16,
+        "step": 1,
+        "label": "Total Products",
+        "default": 16
+    },
+    
+    {
       "type": "select",
-      "id": "total_products",
+      "id": "container_shape",
       "options": [
         {
-          "value": "4",
-          "label": "4"
+          "value": "rectangle",
+          "label": "Rectangle"
         },
         {
-          "value": "8",
-          "label": "8"
+          "value": "square",
+          "label": "Square"
         },
         {
-          "value": "12",
-          "label": "12"
-        },
-        {
-          "value": "16",
-          "label": "16"
+          "value": "circle",
+          "label": "Circle"
         }
       ],
-      "default": "8",
-      "label": "Total Products To Show"
+      "default": "rectangle",
+      "label": "Product Container Shape"
     },
     {
       "type": "select",
