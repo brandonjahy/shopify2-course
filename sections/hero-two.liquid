@@ -1,9 +1,9 @@
 {{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
 
-<div class="hero hero2">
+<div class="hero hero2 hero2--{{ section.settings.hero_height }}">
   <div class="hero2__collection1">
     {%- if section.settings.image1 != blank -%}
-    <img src="{%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
+    <img class="hero2__bg" src="{%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
             {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
             {%- capture sizes -%}
           (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 1.6667 }}px,
@@ -20,7 +20,7 @@
             section.settings.image1
             | image_url: width: 1200
             | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority
-          }}" class="hero2__bg">
+          }}">
     
     {%- else -%}
     {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -34,7 +34,7 @@
   </div>
   <div class="hero2__collection2">
     {%- if section.settings.image2 != blank -%}
-      <img src="{%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
+      <img class="hero2__bg" src="{%- if section.settings.image_behavior == 'ambient' or section.settings.image_behavior == 'zoom-in' -%}
               {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
               {%- capture sizes -%}
             (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 1.6667 }}px,
@@ -51,7 +51,7 @@
               section.settings.image2
               | image_url: width: 1200
               | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority
-            }}" class="hero2__bg">
+            }}">
       
       {%- else -%}
       {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -90,6 +90,30 @@
     "groups": ["header", "footer"]
   },
   "settings": [
+    {
+      "type": "select",
+      "id": "hero_height",
+      "options": [
+        {
+          "value": "25vh",
+          "label": "25%"
+        },
+        {
+          "value": "50vh",
+          "label": "50%"
+        },
+        {
+          "value": "75vh",
+          "label": "75%"
+        },
+        {
+          "value": "100vh",
+          "label": "100%"
+        }
+      ],
+      "default": "100vh",
+      "label": "Height"
+    },
     {
       "type": "image_picker",
       "id": "image1",
