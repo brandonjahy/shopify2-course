@@ -160,17 +160,17 @@
     "hero_two_9HfiiK": {
       "type": "hero-two",
       "settings": {
-        "hero_height": "100vh",
+        "hero_height": "50vh",
         "image1": "shopify:\/\/shop_images\/autumn-trees-hillside.jpg",
         "background1": "rgba(0,0,0,0.5)",
         "opacity1": 50,
-        "button_link1": "",
-        "button_label1": "Button label",
+        "button_link1": "shopify:\/\/collections\/adidas",
+        "button_label1": "Addias",
         "image2": "shopify:\/\/shop_images\/abandoned-iceland-farm-home.jpg",
         "background2": "rgba(0,0,0,0.5)",
         "opacity2": 50,
-        "button_link2": "",
-        "button_label2": "Button label"
+        "button_link2": "shopify:\/\/collections\/nike",
+        "button_label2": "Sale"
       }
     }
   },
