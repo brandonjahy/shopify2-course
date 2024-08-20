@@ -34,8 +34,35 @@
     ]
   },
   {
+    "name": "Header Settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Global Styles"
+      },
+      {
+        "type": "color",
+        "id": "header_bg",
+        "default": "#f7f9fd",
+        "label": "Body Background",
+        "info": "this is the background color for the whole site"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.colors.name",
     "settings": [
+      {
+        "type": "header",
+        "content": "Global Styles"
+      },
+      {
+        "type": "color",
+        "id": "body_bg",
+        "default": "#f7f9fd",
+        "label": "Body Background",
+        "info": "this is the background color for the whole site"
+      },
       {
         "type": "color_scheme_group",
         "id": "color_schemes",

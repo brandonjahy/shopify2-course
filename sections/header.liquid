@@ -1,5 +1,6 @@
 {% case section.settings.header_type %}
 {% when 'header1' %}
+  {{ 'Header1.css' | asset_url | stylesheet_tag }}
 <header class="header header1">
   <ul class="header1__collections-nav">
     {%- if section.settings.menu != blank-%}
@@ -73,6 +74,7 @@
 </header>
 
 {% when 'header2' %}
+  {{ 'Header2.css' | asset_url | stylesheet_tag }}
 <!-- Header 2 code here -->
 <header class="header header2">
   <div class="header2__logo">
@@ -131,6 +133,7 @@
 </header>
 
 {% when 'header3' %}
+  {{ 'Header3.css' | asset_url | stylesheet_tag }}
 <!-- Header 3 code here -->
 <header class="header header3">
   <div class="header3__logo">

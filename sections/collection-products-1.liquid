@@ -1,3 +1,8 @@
+
+{{ 'Collection1.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.collection.all_products_count %}
+
 <div class="collection collection1">
   <div class="container">
     <div class="row">
@@ -44,7 +49,16 @@
               {%- if section.settings.show_price == true -%}
               <span class="collection1__product_price">
                 {{ product.price }}
-                </span></div>
+                </span>
+                <div>
+                  {% for block in section.blocks %}
+                    {% case block.type %}
+                      {% when '@app' %}
+                      {% render block %}
+                    {% endcase %}
+                  {% endfor %}
+                </div>
+                </div>
                 {%- endif -%}
             <div class="collection1__colors">
               <div class="collection1__color collection1__color--blue"></div>
@@ -58,7 +72,9 @@
     </div>
   </div>
 </div>
-
+{% else %}
+<h1>Show demo</h1>
+{% endif %}
 
 
 
@@ -294,6 +310,11 @@
       ],
       "default": "col-sm-6",
       "label": "Small Devices"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
     }
   ],
   "presets": [
