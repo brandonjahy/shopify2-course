@@ -196,7 +196,34 @@
 
 {% endcase %}
 
+<script>
+  console.log('loaded javascript from header')
+  //Get body element
+  const bodyTag = document.getElementsByTagName('body')[0];
 
+  // Chekc for class fixed-nav 
+  if(bodyTag.classList.contains('fixed-nav')) {
+    // change styles of header wrapper
+    headerWrapper.style.position = 'fixed'
+    headerWrapper.style.top = 0;
+    headerWrapper.style.left = 0;
+    headerWrapper.style.width = '100%';
+    headerWrapper.style.zindex = '7';
+
+    // remove class of transparent background when scrolled
+    const onScroll = () => {
+      const scrollLocation = document.documentElement.scrollTop;
+
+      if(scrollLocation > 50) {
+        bodyTag.classList.remove('transparent-nav')
+      } else {
+        bodyTag.classList.add('transparent-nav')
+      }
+    }
+    window.addEventListener('scroll', onScroll)
+  }
+  // if class fixed-nav exist remove transprent-nav class when you scroll 
+</script>
 
 {% schema %}
 {

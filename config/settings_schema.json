@@ -46,7 +46,13 @@
         "default": "#f7f9fd",
         "label": "Body Background",
         "info": "this is the background color for the whole site"
-      }
+      },
+      {
+        "type": "checkbox",
+        "id": "header_sticky",
+        "label": "Stick Header To The Top",
+        "default": false
+      }    
     ]
   },
   {
